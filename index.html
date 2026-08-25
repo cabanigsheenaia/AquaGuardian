@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#087f8c">
+
+<title>AquaGuardian Lite</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef9fa;
+    color: #12343b;
+}
+
+/* HEADER */
+
+.header {
+    background: linear-gradient(145deg, #087f8c, #10a6b5);
+    color: white;
+    padding: 25px 20px 30px;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+}
+
+.header-content {
+    max-width: 850px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 52px;
+    height: 52px;
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 29px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.header p {
+    margin: 4px 0 0;
+    opacity: 0.9;
+    font-size: 13px;
+}
+
+.settings {
+    border: none;
+    background: rgba(255,255,255,0.18);
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    font-size: 20px;
+}
+
+/* MAIN */
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    padding: 18px;
+}
+
+/* TEMPERATURE */
+
+.temperature-card {
+    background: white;
+    border-radius: 25px;
+    padding: 25px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    text-align: center;
+}
+
+.label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #71868b;
+    letter-spacing: 1px;
+}
+
+.temperature {
+    font-size: 52px;
+    font-weight: 800;
+    color: #087f8c;
+    margin: 10px 0;
+}
+
+.status {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.normal {
+    background: #dff7e9;
+    color: #17733c;
+}
+
+.warning {
+    background: #fff0c9;
+    color: #8a6100;
+}
+
+.off {
+    background: #e8eef0;
+    color: #607177;
+}
+
+/* TWO CARDS */
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 22px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
+
+.card-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #71868b;
+    letter-spacing: .8px;
+}
+
+.card-value {
+    font-size: 25px;
+    font-weight: 800;
+    margin: 10px 0;
+}
+
+/* PUMP */
+
+.pump-card {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.pump-icon {
+    font-size: 40px;
+}
+
+.pump-value {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 5px 0;
+}
+
+.pump-button {
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    padding: 14px;
+    margin-top: 15px;
+    background: #087f8c;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pump-button:active {
+    transform: scale(.98);
+}
+
+/* SYSTEM */
+
+.system-card {
+    margin-top: 15px;
+}
+
+.system-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.system-dot {
+    width: 11px;
+    height: 11px;
+    background: #24a35a;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+/* READINGS */
+
+.readings {
+    margin-top: 15px;
+}
+
+.reading {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf1f2;
+    font-size: 14px;
+}
+
+.reading:last-child {
+    border-bottom: none;
+}
+
+/* BOTTOM */
+
+.footer {
+    text-align: center;
+    padding: 25px;
+    color: #789096;
+    font-size: 12px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .header h1 {
+        font-size: 21px;
+    }
+
+    .temperature {
+        font-size: 45px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="header-content">
+
+        <div class="logo-area">
+
+            <div class="logo">
+                🌊
+            </div>
+
+            <div>
+
+                <h1>AquaGuardian Lite</h1>
+
+                <p>Smart Fish Pond Management System</p>
+
+            </div>
+
+        </div>
+
+        <button class="settings">
+            ⚙️
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- TEMPERATURE -->
+
+<div class="temperature-card">
+
+    <div class="label">
+        WATER TEMPERATURE
+    </div>
+
+    <div class="temperature" id="temperature">
+        30.0°C
+    </div>
+
+    <span
+        id="temperatureStatus"
+        class="status normal">
+
+        ● NORMAL
+
+    </span>
+
+</div>
+
+
+<!-- WATER + POWER -->
+
+<div class="grid">
+
+    <div class="card">
+
+        <div class="card-title">
+            💧 WATER
+        </div>
+
+        <div class="card-value">
+            NORMAL
+        </div>
+
+        <span class="status normal">
+            MONITORED
+        </span>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            ☀️ POWER
+        </div>
+
+        <div class="card-value">
+            SOLAR
+        </div>
+
+        <span class="status normal">
+            POWERED
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- AIR PUMP -->
+
+<div class="card pump-card">
+
+    <div class="pump-icon">
+        💨
+    </div>
+
+    <div class="card-title">
+        AIR PUMP
+    </div>
+
+    <div
+        class="pump-value"
+        id="pump">
+
+        OFF
+
+    </div>
+
+    <span
+        id="pumpStatus"
+        class="status off">
+
+        STANDBY
+
+    </span>
+
+    <button
+        class="pump-button"
+        onclick="togglePump()"
+        id="pumpButton">
+
+        TURN ON PUMP
+
+    </button>
+
+</div>
+
+
+<!-- SYSTEM STATUS -->
+
+<div class="card system-card">
+
+    <div class="system-header">
+
+        <strong>
+            System Status
+        </strong>
+
+        <span>
+
+            <span class="system-dot"></span>
+
+            <span id="systemStatus">
+                Normal
+            </span>
+
+        </span>
+
+    </div>
+
+    <p
+        id="systemMessage"
+        style="color:#71868b;font-size:14px;">
+
+        AquaGuardian is operating normally.
+
+    </p>
+
+</div>
+
+
+<!-- READINGS -->
+
+<div class="card readings">
+
+    <div class="card-title">
+        📊 RECENT READINGS
+    </div>
+
+    <div class="reading">
+
+        <span>Latest temperature</span>
+
+        <strong id="latest">
+            30.0°C
+        </strong>
+
+    </div>
+
+    <div class="reading">
+
+        <span>Temperature threshold</span>
+
+        <strong>
+            30°C
+        </strong>
+
+    </div>
+
+    <div class="reading">
+
+        <span>Air pump</span>
+
+        <strong id="readingPump">
+            OFF
+        </strong>
+
+    </div>
+
+    <div class="reading">
+
+        <span>Connection</span>
+
+        <strong>
+            Demo Mode
+        </strong>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div class="footer">
+
+    AquaGuardian Lite<br>
+    Smart • Affordable • Automated
+
+</div>
+
+
+<script>
+
+let pump = false;
+
+let temperature = 30;
+
+
+/* PUMP */
+
+function togglePump() {
+
+    pump = !pump;
+
+    document.getElementById("pump").innerText =
+        pump ? "ON" : "OFF";
+
+    document.getElementById("readingPump").innerText =
+        pump ? "ON" : "OFF";
+
+    document.getElementById("pumpStatus").innerText =
+        pump ? "● RUNNING" : "STANDBY";
+
+    document.getElementById("pumpStatus").className =
+        pump ? "status normal" : "status off";
+
+    document.getElementById("pumpButton").innerText =
+        pump ? "TURN OFF PUMP" : "TURN ON PUMP";
+
+}
+
+
+/* TEMPERATURE TEST */
+
+function testTemperature() {
+
+    temperature =
+        28 + Math.random() * 8;
+
+    updateTemperature();
+
+}
+
+
+/* UPDATE TEMPERATURE */
+
+function updateTemperature() {
+
+    document.getElementById("temperature").innerText =
+        temperature.toFixed(1) + "°C";
+
+    document.getElementById("latest").innerText =
+        temperature.toFixed(1) + "°C";
+
+
+    if (temperature >= 30) {
+
+        document.getElementById("temperatureStatus").innerText =
+            "● HIGH TEMPERATURE";
+
+        document.getElementById("temperatureStatus").className =
+            "status warning";
+
+        document.getElementById("systemStatus").innerText =
+            "Warning";
+
+        document.getElementById("systemMessage").innerText =
+            "⚠️ Water temperature is above the 30°C threshold. Aeration is recommended.";
+
+    }
+
+    else {
+
+        document.getElementById("temperatureStatus").innerText =
+            "● NORMAL";
+
+        document.getElementById("temperatureStatus").className =
+            "status normal";
+
+        document.getElementById("systemStatus").innerText =
+            "Normal";
+
+        document.getElementById("systemMessage").innerText =
+            "AquaGuardian is operating normally.";
+
+    }
+
+}
+
+
+/* DEMO TEMPERATURE */
+
+setInterval(function() {
+
+    temperature =
+        29 + Math.random() * 3;
+
+    updateTemperature();
+
+}, 10000);
+
+</script>
+
+</body>
+</html>
